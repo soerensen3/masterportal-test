@@ -68,7 +68,14 @@ jobs:
 
       - name: Build Masterportal
         working-directory: masterportal
-        run: PORTAL_PATH="${PORTAL_ROOT}/${PORTAL_NAME}" npm run build
+        shell: bash
+        run: |
+          set -euo pipefail
+          portal_path="${PORTAL_ROOT}/${PORTAL_NAME}"
+          # Masterportal v3.23.0 may prompt for the portal path instead of reading
+          # PORTAL_PATH. Feed the path on stdin while also exporting the variable so
+          # both script variants build the selected portal in non-interactive CI.
+          printf '%s\n' "${portal_path}" | PORTAL_PATH="${portal_path}" npm run build
 
       - name: Add GitHub Pages entry point
         shell: bash
