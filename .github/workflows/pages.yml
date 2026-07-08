@@ -77,18 +77,6 @@ jobs:
           # both script variants build the selected portal in non-interactive CI.
           printf '%s\n' "${portal_path}" | PORTAL_PATH="${portal_path}" npm run build
 
-      - name: Rewrite asset paths in built files
-        shell: bash
-        run: |
-          set -euo pipefail
-          # Masterportal still emits "../mastercode/…" references in some built
-          # HTML and JS assets.  Those resolve outside the GitHub Pages project
-          # root, so rewrite them to the same-origin "./mastercode/…" path.
-          while IFS= read -r -d '' file; do
-            echo "Rewriting paths in: ${file}"
-            sed -i 's|../mastercode/|./mastercode/|g' "${file}"
-          done < <(find masterportal/dist -type f \( -name '*.html' -o -name '*.js' \) -print0)
-
       - name: Add GitHub Pages entry point
         shell: bash
         run: |
