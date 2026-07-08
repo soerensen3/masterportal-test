@@ -1,0 +1,4 @@
+/* Portal-specific additions. Keep intentionally small to ease Masterportal upgrades. */
+:root {
+    --geobasis-nrw-accent: #2368a7;
+}

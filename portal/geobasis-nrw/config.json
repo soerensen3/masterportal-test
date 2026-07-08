@@ -1,0 +1,326 @@
+{
+  "portalConfig": {
+    "map": {
+      "mapView": {
+        "projection": "EPSG:3857",
+        "extent": [
+          634521.0975,
+          6480984.633,
+          1068667.1116,
+          6927697.6899
+        ],
+        "startCenter": [
+          851594.1046,
+          6701282.8688
+        ],
+        "startZoomLevel": 7,
+        "options": [
+          {
+            "resolution": 156543.03392804097,
+            "scale": 559082264.0287,
+            "zoomLevel": 0
+          },
+          {
+            "resolution": 78271.51696402048,
+            "scale": 279541132.0144,
+            "zoomLevel": 1
+          },
+          {
+            "resolution": 39135.75848201024,
+            "scale": 139770566.0072,
+            "zoomLevel": 2
+          },
+          {
+            "resolution": 19567.87924100512,
+            "scale": 69885283.0036,
+            "zoomLevel": 3
+          },
+          {
+            "resolution": 9783.93962050256,
+            "scale": 34942641.5018,
+            "zoomLevel": 4
+          },
+          {
+            "resolution": 4891.96981025128,
+            "scale": 17471320.7509,
+            "zoomLevel": 5
+          },
+          {
+            "resolution": 2445.98490512564,
+            "scale": 8735660.3754,
+            "zoomLevel": 6
+          },
+          {
+            "resolution": 1222.99245256282,
+            "scale": 4367830.1877,
+            "zoomLevel": 7
+          },
+          {
+            "resolution": 611.49622628141,
+            "scale": 2183915.0939,
+            "zoomLevel": 8
+          },
+          {
+            "resolution": 305.748113140705,
+            "scale": 1091957.5469,
+            "zoomLevel": 9
+          },
+          {
+            "resolution": 152.874056570353,
+            "scale": 545978.7735,
+            "zoomLevel": 10
+          },
+          {
+            "resolution": 76.437028285176,
+            "scale": 272989.3867,
+            "zoomLevel": 11
+          },
+          {
+            "resolution": 38.218514142588,
+            "scale": 136494.6934,
+            "zoomLevel": 12
+          },
+          {
+            "resolution": 19.109257071294,
+            "scale": 68247.3467,
+            "zoomLevel": 13
+          },
+          {
+            "resolution": 9.554628535647,
+            "scale": 34123.6733,
+            "zoomLevel": 14
+          },
+          {
+            "resolution": 4.777314267824,
+            "scale": 17061.8367,
+            "zoomLevel": 15
+          },
+          {
+            "resolution": 2.388657133912,
+            "scale": 8530.9183,
+            "zoomLevel": 16
+          },
+          {
+            "resolution": 1.194328566956,
+            "scale": 4265.4592,
+            "zoomLevel": 17
+          },
+          {
+            "resolution": 0.597164283478,
+            "scale": 2132.7296,
+            "zoomLevel": 18
+          },
+          {
+            "resolution": 0.298582141739,
+            "scale": 1066.3648,
+            "zoomLevel": 19
+          },
+          {
+            "resolution": 0.149291070869,
+            "scale": 533.1824,
+            "zoomLevel": 20
+          },
+          {
+            "resolution": 0.074645535435,
+            "scale": 266.5912,
+            "zoomLevel": 21
+          },
+          {
+            "resolution": 0.037322767717,
+            "scale": 133.2956,
+            "zoomLevel": 22
+          }
+        ]
+      },
+      "controls": {
+        "zoom": true,
+        "totalView": true,
+        "fullScreen": true,
+        "backForward": true,
+        "mousePosition": true,
+        "scaleLine": true,
+        "expandable": {
+          "button3d": true,
+          "tiltView": true
+        }
+      },
+      "startingMapMode": "2D",
+      "getFeatureInfo": {},
+      "baselayerSwitcher": {
+        "active": true,
+        "visibleLayerIds": [
+          "basemap-de"
+        ]
+      }
+    },
+    "mainMenu": {
+      "title": {
+        "text": "Geobasis NRW – OGC APIs"
+      },
+      "sections": [
+        [
+          {
+            "type": "legend"
+          },
+          {
+            "type": "featureLister"
+          },
+          {
+            "type": "filter"
+          },
+          {
+            "type": "styleVT"
+          }
+        ],
+        [
+          {
+            "type": "measure"
+          },
+          {
+            "type": "coordToolkit"
+          },
+          {
+            "type": "fileImport"
+          },
+          {
+            "type": "shareView"
+          },
+          {
+            "type": "about",
+            "abstractText": "Masterportal-Konfiguration für die öffentlichen OGC APIs von Geobasis NRW."
+          }
+        ]
+      ]
+    },
+    "tree": {
+      "type": "default",
+      "addLayerButton": false,
+      "singleBaselayer": true,
+      "baselayer": "Hintergrundkarten",
+      "subjectlayer": "Fachdaten"
+    },
+    "portalFooter": {
+      "urls": [
+        {
+          "bezeichnung": "Geobasis NRW",
+          "url": "https://www.bezreg-koeln.nrw.de/geobasis-nrw"
+        },
+        {
+          "bezeichnung": "Masterportal",
+          "url": "https://www.masterportal.org/"
+        }
+      ]
+    }
+  },
+  "layerConfig": {
+    "baselayer": [
+      {
+        "id": "basemap-de"
+      }
+    ],
+    "subjectlayer": [
+      {
+        "type": "folder",
+        "name": "Schnelle Kartendarstellung (Tiles)",
+        "children": [
+          {
+            "id": "lika-vt"
+          },
+          {
+            "id": "gebref-vt"
+          },
+          {
+            "id": "tfis-vt"
+          },
+          {
+            "id": "3dg-tileset"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "OGC API Features – Liegenschaftskataster",
+        "children": [
+          {
+            "id": "lika-flurstueck-oaf"
+          },
+          {
+            "id": "lika-flurstueck-punkt-oaf"
+          },
+          {
+            "id": "lika-gebaeude-bauwerk-oaf"
+          },
+          {
+            "id": "lika-katasterbezirk-oaf"
+          },
+          {
+            "id": "lika-nutzung-oaf"
+          },
+          {
+            "id": "lika-nutzung-flurstueck-oaf"
+          },
+          {
+            "id": "lika-verwaltungseinheit-oaf"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "OGC API Features – Gebäudereferenzen",
+        "children": [
+          {
+            "id": "gebref-gebref-oaf"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "OGC API Features – TFIS NRW",
+        "children": [
+          {
+            "id": "tfis-aussichtspunkte-oaf"
+          },
+          {
+            "id": "tfis-burgen-denkmaeler-etc-oaf"
+          },
+          {
+            "id": "tfis-infrastruktur-wassersport-oaf"
+          },
+          {
+            "id": "tfis-museen-oaf"
+          },
+          {
+            "id": "tfis-natur-oaf"
+          },
+          {
+            "id": "tfis-schifffahrt-oaf"
+          },
+          {
+            "id": "tfis-schifffahrt-kennzeichnung-oaf"
+          },
+          {
+            "id": "tfis-sport-baden-oaf"
+          },
+          {
+            "id": "tfis-theater-musik-oaf"
+          },
+          {
+            "id": "tfis-touristikinformation-oaf"
+          },
+          {
+            "id": "tfis-unterkunft-rast-oaf"
+          },
+          {
+            "id": "tfis-verkehr-oaf"
+          },
+          {
+            "id": "tfis-wanderwege-oaf"
+          },
+          {
+            "id": "tfis-wanderwege-kennzeichnung-oaf"
+          }
+        ]
+      }
+    ]
+  }
+}

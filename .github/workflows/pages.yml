@@ -1,0 +1,125 @@
+name: Build and deploy Masterportal to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  MASTERPORTAL_REPOSITORY: https://gitlab.opencode.de/geowerkstatt-hamburg/masterportal.git
+  # Pin this to a release tag for reproducible production deployments.
+  MASTERPORTAL_REF: v3.23.0
+  PORTAL_NAME: geobasis-nrw
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out portal configuration
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validate configuration
+        run: npm run validate
+
+      - name: Clone Masterportal
+        run: |
+          git clone --depth 1 --branch "${MASTERPORTAL_REF}" \
+            "${MASTERPORTAL_REPOSITORY}" masterportal
+
+      - name: Locate and prepare portal directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -d masterportal/portalconfigs/basic ]]; then
+            portal_root="portalconfigs"
+          elif [[ -d masterportal/portal/basic ]]; then
+            portal_root="portal"
+          else
+            echo "Basic portal template not found." >&2
+            exit 1
+          fi
+
+          echo "PORTAL_ROOT=${portal_root}" >> "$GITHUB_ENV"
+          rm -rf "masterportal/${portal_root}/${PORTAL_NAME}"
+          cp -R "masterportal/${portal_root}/basic" \
+            "masterportal/${portal_root}/${PORTAL_NAME}"
+          cp -R "portal/${PORTAL_NAME}/." \
+            "masterportal/${portal_root}/${PORTAL_NAME}/"
+
+      - name: Install Masterportal dependencies
+        working-directory: masterportal
+        run: npm ci
+
+      - name: Build Masterportal
+        working-directory: masterportal
+        run: PORTAL_PATH="${PORTAL_ROOT}/${PORTAL_NAME}" npm run build
+
+      - name: Add GitHub Pages entry point
+        shell: bash
+        run: |
+          set -euo pipefail
+          portal_index="$(find masterportal/dist -type f -path "*/${PORTAL_NAME}/index.html" -print -quit)"
+          if [[ -n "${portal_index}" ]]; then
+            relative_path="${portal_index#masterportal/dist/}"
+            relative_path="${relative_path%/index.html}"
+          elif [[ -f masterportal/dist/index.html ]]; then
+            # Some Masterportal versions emit the selected portal directly into dist/.
+            touch masterportal/dist/.nojekyll
+            exit 0
+          else
+            echo "Built portal index.html not found below dist/." >&2
+            find masterportal/dist -maxdepth 4 -type f | sort
+            exit 1
+          fi
+
+          cat > masterportal/dist/index.html <<EOF
+          <!doctype html>
+          <html lang="de">
+            <head>
+              <meta charset="utf-8">
+              <meta http-equiv="refresh" content="0; url=./${relative_path}/">
+              <meta name="robots" content="noindex">
+              <title>Geobasis NRW – OGC APIs</title>
+            </head>
+            <body>
+              <a href="./${relative_path}/">Portal öffnen</a>
+            </body>
+          </html>
+          EOF
+          touch masterportal/dist/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: masterportal/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

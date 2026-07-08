@@ -1,0 +1,13 @@
+{
+  "name": "masterportal-geobasis-nrw",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate-config.mjs",
+    "check:endpoints": "node scripts/check-endpoints.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

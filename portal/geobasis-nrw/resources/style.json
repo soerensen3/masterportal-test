@@ -1,0 +1,53 @@
+[
+  {
+    "styleId": "geobasis-nrw-generic",
+    "rules": [
+      {
+        "conditions": {},
+        "style": {
+          "point": {
+            "type": "circle",
+            "circleRadius": 5,
+            "circleFillColor": [
+              35,
+              104,
+              167,
+              0.8
+            ],
+            "circleStrokeColor": [
+              255,
+              255,
+              255,
+              1
+            ],
+            "circleStrokeWidth": 1
+          },
+          "line": {
+            "lineStrokeColor": [
+              35,
+              104,
+              167,
+              1
+            ],
+            "lineStrokeWidth": 2
+          },
+          "polygon": {
+            "polygonFillColor": [
+              35,
+              104,
+              167,
+              0.25
+            ],
+            "polygonStrokeColor": [
+              35,
+              104,
+              167,
+              1
+            ],
+            "polygonStrokeWidth": 1
+          }
+        }
+      }
+    ]
+  }
+]
