@@ -77,18 +77,17 @@ jobs:
           # both script variants build the selected portal in non-interactive CI.
           printf '%s\n' "${portal_path}" | PORTAL_PATH="${portal_path}" npm run build
 
-      - name: Rewrite asset paths in built HTML
+      - name: Rewrite asset paths in built files
         shell: bash
         run: |
           set -euo pipefail
-          # The Masterportal build emits index.html with src="../mastercode/…" which
-          # resolves one level above the portal subdirectory.  Since we deploy the
-          # whole dist/ tree under the same project URL, rewrite those to the correct
-          # same-origin path "mastercode/…".
-          while IFS= read -r -d '' html; do
-            echo "Rewriting paths in: ${html}"
-            sed -i 's|src="\.\./mastercode/|src="./mastercode/|g; s|href="\.\./mastercode/|href="./mastercode/|g' "${html}"
-          done < <(find masterportal/dist -name 'index.html' -print0)
+          # Masterportal still emits "../mastercode/…" references in some built
+          # HTML and JS assets.  Those resolve outside the GitHub Pages project
+          # root, so rewrite them to the same-origin "./mastercode/…" path.
+          while IFS= read -r -d '' file; do
+            echo "Rewriting paths in: ${file}"
+            sed -i 's|../mastercode/|./mastercode/|g' "${file}"
+          done < <(find masterportal/dist -type f \( -name '*.html' -o -name '*.js' \) -print0)
 
       - name: Add GitHub Pages entry point
         shell: bash
